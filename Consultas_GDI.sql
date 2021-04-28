@@ -48,10 +48,14 @@ FROM AVIAO A LEFT OUTER JOIN
 -- 4)SEMI JOIN
 	-- Listar  todos os aviões que pertencem a Companhias Aéreas
 
-SELECT A.NUM_CAUDA, C.NOME_COMPANHIA
-FROM AVIAO A LEFT OUTER JOIN
-COMPANHIA_AEREA C ON A.CNPJ = C.CNPJ
-WHERE A.CNPJ IS NOT NULL;
+SELECT A.NUM_CAUDA
+FROM AVIAO A 
+WHERE EXISTS 
+    (
+    SELECT 1
+    FROM COMPANHIA_AEREA C
+    WHERE A.CNPJ = C.CNPJ
+    );
 
 -- 5)ANTI JOIN 
 	-- Listar Voos sem passageiros e passageiros sem voos
